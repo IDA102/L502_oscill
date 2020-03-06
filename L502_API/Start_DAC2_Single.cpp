@@ -1,4 +1,4 @@
-#include "Header.h"
+﻿#include "Header.h"
 
 void Start_DAC2_Single(t_l502_hnd& create, double* buf, int buf_size)
 {

@@ -1,47 +1,47 @@
-#include "Header.h"
+п»ї#include "Header.h"
 
 int Start_DAC2_Cycle(t_l502_hnd& create,double* buf,int buf_size)
 {
 	int err = 0;
 	uint32_t* out_buf=new uint32_t[buf_size];
 
-	//_____выделяем место в драйвере под циклический буфер
+	//_____РІС‹РґРµР»СЏРµРј РјРµСЃС‚Рѕ РІ РґСЂР°Р№РІРµСЂРµ РїРѕРґ С†РёРєР»РёС‡РµСЃРєРёР№ Р±СѓС„РµСЂ
 	err = L502_OutCycleLoadStart(create, buf_size);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка выделения памяти в драйвере: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° РІС‹РґРµР»РµРЅРёСЏ РїР°РјСЏС‚Рё РІ РґСЂР°Р№РІРµСЂРµ: " << L502_GetErrorString(err) << endl;
 		return err;
 	}
 
-	//_____подготовка блока данных для записи
+	//_____РїРѕРґРіРѕС‚РѕРІРєР° Р±Р»РѕРєР° РґР°РЅРЅС‹С… РґР»СЏ Р·Р°РїРёСЃРё
 	err = L502_PrepareData(create, NULL, buf, NULL, buf_size, L502_DAC_FLAGS_VOLT, out_buf);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка подготовка блока данных для записи: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° РїРѕРґРіРѕС‚РѕРІРєР° Р±Р»РѕРєР° РґР°РЅРЅС‹С… РґР»СЏ Р·Р°РїРёСЃРё: " << L502_GetErrorString(err) << endl;
 		return err;
 	}
 
-	//_____запись подготовленного блока
+	//_____Р·Р°РїРёСЃСЊ РїРѕРґРіРѕС‚РѕРІР»РµРЅРЅРѕРіРѕ Р±Р»РѕРєР°
 	err = L502_Send(create, out_buf, buf_size, 500);
 	if (err < 0)
 	{
-		cout << "Ошибка передачи данных: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° РїРµСЂРµРґР°С‡Рё РґР°РЅРЅС‹С…: " << L502_GetErrorString(err) << endl;
 		return err;
 	}
 	else if (err < 0)
 	{
 		if (err < buf_size)
 		{
-			cout << "Ошибка передачи данных: передано слов = " << err << endl;
+			cout << "РћС€РёР±РєР° РїРµСЂРµРґР°С‡Рё РґР°РЅРЅС‹С…: РїРµСЂРµРґР°РЅРѕ СЃР»РѕРІ = " << err << endl;
 			return err;
 		}
 	}
 
-	//_____делаем активным ранее загруженный буфер
+	//_____РґРµР»Р°РµРј Р°РєС‚РёРІРЅС‹Рј СЂР°РЅРµРµ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Р№ Р±СѓС„РµСЂ
 	err = L502_OutCycleSetup(create, L502_OUT_CYCLE_FLAGS_FORCE);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка активации буфера: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° Р°РєС‚РёРІР°С†РёРё Р±СѓС„РµСЂР°: " << L502_GetErrorString(err) << endl;
 		return err;
 	}
 

@@ -1,4 +1,4 @@
-#include "Header.h"
+ï»¿#include "Header.h"
 
 int Get_ADC_1chan(t_l502_hnd& create, double* adc_out_buf, uint32_t adc_out_buf_size)
 {
@@ -11,13 +11,13 @@ int Get_ADC_1chan(t_l502_hnd& create, double* adc_out_buf, uint32_t adc_out_buf_
 	err = L502_Recv(create, out_buffer, adc_out_buf_size, 100);
 	if (err<0)
 	{
-		cout << "Îøèáêà ïðèåìà äàííûõ ÀÖÏ: " << L502_GetErrorString(err) << endl;
+		cout << "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ñ€Ð¸ÐµÐ¼Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… ÐÐ¦ÐŸ: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}
 	else if(err < adc_out_buf_size)
 	{
-		cout << "Ïðî÷èòàíû íå âñå äàííûå!" << endl;
+		cout << "ÐŸÑ€Ð¾Ñ‡Ð¸Ñ‚Ð°Ð½Ñ‹ Ð½Ðµ Ð²ÑÐµ Ð´Ð°Ð½Ð½Ñ‹Ðµ!" << endl;
 		return err;
 	}
 
@@ -26,7 +26,7 @@ int Get_ADC_1chan(t_l502_hnd& create, double* adc_out_buf, uint32_t adc_out_buf_
 	err = L502_ProcessAdcData(create, out_buffer, adc_out_buf, &adc_out_buf_size, L502_DAC_FLAGS_VOLT);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Îøèáêà îáðàáîòêè äàííûõ ñ ÀÖÏ: " << L502_GetErrorString(err) << endl;
+		cout << "ÐžÑˆÐ¸Ð±ÐºÐ° Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ñ ÐÐ¦ÐŸ: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}

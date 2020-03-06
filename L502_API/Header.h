@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "../inc/l502api.h"
 #include <iostream>
@@ -16,7 +16,7 @@ using namespace std;
 #define	  stop __asm nop
 #define M_PI 3.14159265358979323846
 
-#define ADC_ARRAY_SIZE 256 //4096*200 //в примере
+#define ADC_ARRAY_SIZE 256 //4096*200 //РІ РїСЂРёРјРµСЂРµ
 #define F_ACQ 256
 //#define F_ACQ 1/(FREQ*ADC_ARRAY_SIZE)
 //static double F_ACQ = 1;

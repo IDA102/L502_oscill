@@ -1,4 +1,4 @@
-#include "Header.h"
+﻿#include "Header.h"
 
 bool connect_L502(t_l502_hnd* create)
 {

@@ -1,57 +1,57 @@
-#include "Header.h"
+п»ї#include "Header.h"
 
 int SetDev(t_l502_hnd& create)
 {
 	int err = 0;
 
-	//_____количество логических каналов
+	//_____РєРѕР»РёС‡РµСЃС‚РІРѕ Р»РѕРіРёС‡РµСЃРєРёС… РєР°РЅР°Р»РѕРІ
 	err = L502_SetLChannelCount(create, 1);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка установки количества логических каналов: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° СѓСЃС‚Р°РЅРѕРІРєРё РєРѕР»РёС‡РµСЃС‚РІР° Р»РѕРіРёС‡РµСЃРєРёС… РєР°РЅР°Р»РѕРІ: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}
 
-	//_____настройка таблицы логических каналов
+	//_____РЅР°СЃС‚СЂРѕР№РєР° С‚Р°Р±Р»РёС†С‹ Р»РѕРіРёС‡РµСЃРєРёС… РєР°РЅР°Р»РѕРІ
 	err = L502_SetLChannel(create, 0, 0, L502_LCH_MODE_DIFF, L502_ADC_RANGE_10, 1);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка настройки логических каналов: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° РЅР°СЃС‚СЂРѕР№РєРё Р»РѕРіРёС‡РµСЃРєРёС… РєР°РЅР°Р»РѕРІ: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}
 
-	//_____устанавливаем размер буфера драйвера
+	//_____СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° РґСЂР°Р№РІРµСЂР°
 	L502_SetDmaBufSize(create, L502_DMA_CH_IN | L502_DMA_CH_OUT, ADC_ARRAY_SIZE+5);
 
-	//_____подбираем делитель частоты АЦП
+	//_____РїРѕРґР±РёСЂР°РµРј РґРµР»РёС‚РµР»СЊ С‡Р°СЃС‚РѕС‚С‹ РђР¦Рџ
 	double f_acq = F_ACQ*pow(10,3);
 	L502_SetAdcFreq(create, &f_acq, nullptr);
 
-	//_____запись настроек на устройство
+	//_____Р·Р°РїРёСЃСЊ РЅР°СЃС‚СЂРѕРµРє РЅР° СѓСЃС‚СЂРѕР№СЃС‚РІРѕ
 	err = L502_Configure(create, 0);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка отправки настроек: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё РЅР°СЃС‚СЂРѕРµРє: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}
 
-	//_____разрешаем нужные потоки
+	//_____СЂР°Р·СЂРµС€Р°РµРј РЅСѓР¶РЅС‹Рµ РїРѕС‚РѕРєРё
 	err = L502_StreamsEnable(create, L502_STREAM_ADC | L502_STREAM_DAC2);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка разрешения потоков: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° СЂР°Р·СЂРµС€РµРЅРёСЏ РїРѕС‚РѕРєРѕРІ: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}
 
-	//_____стартуем потоки
+	//_____СЃС‚Р°СЂС‚СѓРµРј РїРѕС‚РѕРєРё
 	err = L502_StreamsStart(create);
 	if (err != L502_ERR_OK)
 	{
-		cout << "Ошибка старта потоков: " << L502_GetErrorString(err) << endl;
+		cout << "РћС€РёР±РєР° СЃС‚Р°СЂС‚Р° РїРѕС‚РѕРєРѕРІ: " << L502_GetErrorString(err) << endl;
 		system("pause");
 		return err;
 	}
